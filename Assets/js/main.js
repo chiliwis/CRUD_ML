@@ -4,27 +4,32 @@ let numbarriles = [];
 let barril_previo = "";
 let editando = false;
 
-const CrearBarril = document.getElementById ("CrearBarril");
-const BorrarBarril = document.getElementById ("BorrarBarril");
+const CrearBarril = document.getElementById("CrearBarril");
+const lista = document.getElementById("lista");
+const BorrarBarril = document.getElementById("BorrarBarril");
 
 function agregarBarril() {
     const barril = CrearBarril.value;
     numbarriles.push(barril);
     localStorage.setItem("numbarriles", JSON.stringify(numbarriles));
-    console.log(numbarriles);
-
-    // console.log(numbarril)
+    CrearBarril.value = "";
+    actualizarlista();
 }
 
-function actualizarbarriles (){
-    
-} 
-
-function limpiarStorage(){
+function actualizarlista() {
+    lista.innerHTML ="";
+    console.log("entro a actualizar barriles");
+    numbarriles.forEach(barril => {
+        const li = document.createElement("li");
+        li.textContent = barril;
+        li.classList.add("list-group-item");
+        lista.appendChild(li);
+    });
+}
+function limpiarStorage() {
     localStorage.clear();
-    numbarriles =[]; 
+    numbarriles = [];
 }
-
 // function borrarBarril() {
 //    localStorage.clear();
 //    numbarril = []
