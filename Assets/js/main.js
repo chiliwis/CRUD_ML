@@ -6,19 +6,26 @@ let editando = false;
 
 const CrearBarril = document.getElementById("CrearBarril");
 const lista = document.getElementById("lista");
-const BorrarBarril = document.getElementById("BorrarBarril");
+// const BorrarBarril = document.getElementById("BorrarBarril");
 
 function agregarBarril() {
+    if (editando) {
+        console.log(barril_previo);
+        numbarriles = 
+        
+    } else {
+        
+    }
     const barril = CrearBarril.value;
     numbarriles.push(barril);
     localStorage.setItem("numbarriles", JSON.stringify(numbarriles));
-    CrearBarril.value = "";
+    CrearBarril.value ="";
     actualizarlista();
 }
 
-function actualizarlista() {
+function actualizarlista(){
     lista.innerHTML ="";
-    console.log("entro a actualizar barriles");
+    // console.log("entro a actualizar barriles");
     numbarriles.forEach(barril => {
         const li = document.createElement("li");
         li.textContent = barril;
