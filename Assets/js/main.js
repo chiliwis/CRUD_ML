@@ -1,7 +1,7 @@
 console.log("Entro al main.js");
 
-let numbarriles = [];
-let barril_previo = "";
+let barriles = localStorage.getItem("barriles") ? JSON.parse(localStorage.getItem("barriles")) : [];
+let barriles_previo = "";
 let editando = false;
 
 const CrearBarril = document.getElementById("CrearBarril");
@@ -10,33 +10,55 @@ const lista = document.getElementById("lista");
 
 function agregarBarril() {
     if (editando) {
-        console.log(barril_previo);
-        numbarriles = 
-        
+        console.log(barriles_previo);
+        barriles = barriles.map(barrilesIndividual => barrilesIndividual === barriles_previo ? CrearBarrilInput.value : barrilesIndividual);
+        localStorage.setItem("barriles", JSON.stringify(barriles));
+        CrearBarril.value = "";
+        actualizarlista();
+        editando = false;
     } else {
-        
+        const barril = CrearBarril.value;
+        barriles.push(barril);
+        localStorage.setItem("barriles", JSON.stringify(barriles));
+        CrearBarril.value = "";
+        actualizarlista();
     }
-    const barril = CrearBarril.value;
-    numbarriles.push(barril);
-    localStorage.setItem("numbarriles", JSON.stringify(numbarriles));
-    CrearBarril.value ="";
-    actualizarlista();
 }
 
-function actualizarlista(){
-    lista.innerHTML ="";
+
+function actualizarlista() {
+    lista.innerHTML = "";
     // console.log("entro a actualizar barriles");
-    numbarriles.forEach(barril => {
+    barriles.forEach(barril => {
         const li = document.createElement("li");
         li.textContent = barril;
         li.classList.add("list-group-item");
         lista.appendChild(li);
     });
 }
+
+function deleteIndividual (barriles) {
+    console.log(barriles);
+    barriles = barriles.filter(n => n !== barril);
+    localStorage.setItem("barriles", JSON.stringify(barriles));
+    actualizarlista();
+}
+
 function limpiarStorage() {
     localStorage.clear();
-    numbarriles = [];
+    barriles = [];
+    actualizarlista();
 }
+
+function editar(barriles){
+    editando = true;
+    barril_previo = barriles;
+    CrearBarrilInput.value = barriles;
+}
+
+(() => {
+    actualizarlista();
+})()
 // function borrarBarril() {
 //    localStorage.clear();
 //    numbarril = []
